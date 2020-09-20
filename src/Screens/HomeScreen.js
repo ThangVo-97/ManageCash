@@ -6,69 +6,108 @@ import {
   ImageBackground,
   TextInput,
   FlatList,
+  SectionList,
 } from 'react-native';
-import styles from './style';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 // import ImagePicker from 'react-native-image-picker';
 import ImagePicker from 'react-native-image-picker';
-import Color from '../config/color';
+import Color from '../values/color';
 import MainBackGround from '../assets/background.jpg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProgressCircle from 'react-native-progress-circle';
-
+import incomeIcon from '../assets/income.png';
+import expenseIcon from '../assets/expense.png';
 // import moment from 'moment'
 // import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-import DatePicker from 'react-native-datepicker';
-import {Root, ActionSheet} from 'native-base';
-
+import DatePicker from '@react-native-community/datetimepicker';
+import {Root} from 'native-base';
+import styles from '../values/style';
+import Size from '../values/dimens'
+import style from '../values/style';
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       visibility: false,
       DateSearch: '',
+      date: new Date(),
+      incomeMoney: 5000000,
+      expenseMoney: 1200000,
       show: false,
       avatarSource: {},
-      data: [
-        {key: 'Devin'},
-        {key: 'Dan'},
-        {key: 'Dominic'},
-        {key: 'Jackson'},
-        {key: 'James'},
-
-        {key: 'Dominic1'},
-        {key: 'Jack2son'},
-        {key: 'Jam3es'},
-        {key: 'Dev3in'},
-        {key: 'D4an'},
-        {key: 'Dom4inic'},
-        {key: 'Ja5ckson'},
-        {key: 'Ja7mes'},
-        {key: 'Dev6in'},
-        {key: 'Da8n'},
-        {key: 'Dom9inic'},
-        {key: 'Jac9kson'},
-        {key: 'Ja0mes'},
-      ],
     };
   }
 
   render() {
     monthCurrent = new Date().getMonth() + 1;
     yearCurrent = new Date().getFullYear();
+    currentMoney = this.state.incomeMoney - this.state.expenseMoney;
+    this.state.date = new Date();
 
-    const handleConfirm = (date) => {
-      this.setState({DateSearch: date});
-      // DateSearch: moment(date).format('MM YYYY')
+    var DATA = [
+      {
+        title: '20/9/2020',
+        data: [
+          {
+            id: '1',
+            income: '2000000',
+            expense: '1000000',
+            category: 'Classify',
+          },
+        ],
+      },
+      {
+        title: '19/9/2020',
+        data: [
+          {
+            id: '1',
+            income: '2000000',
+            expense: '1000000',
+            category: 'Classify',
+          },
+        ],
+      },
+      {
+        title: '18/9/2020',
+        data: [
+          {
+            id: '1',
+            income: '2000000',
+            expense: '1000000',
+            category: 'Classify',
+          },
+        ],
+      },
+      {
+        title: '18/9/2020',
+        data: [
+          {
+            id: '1',
+            income: '2000000',
+            expense: '1000000',
+            category: 'Classify',
+          },
+        ],
+      },
+    ];
+
+    // datetime picker
+
+    const showPicker = () => {
+      this.setState({
+        show: true,
+      });
     };
-    const showPicker =()=> {
-      this
-    }
-    onPressCancel = () => {
-      this.setState({visibility: false});
+    const onChangeDate = (event, selectedDate) => {
+      console.log('currentDate ' + selectedDate);
+      this.setState({
+        date: selectedDate,
+        show: false,
+      });
+      console.log('date ' + this.state.date);
     };
 
     onPressButton = () => {
@@ -107,11 +146,14 @@ class HomeScreen extends React.Component {
     onTestPress = () => {
       onClickAddImage();
     };
+    const plusMoneyPress=()=>{
+      this.props.navigation.navigate('Category')
+    }
     return (
       <View style={styles.container}>
         <ImageBackground source={MainBackGround} style={styles.imageStyle}>
           <View style={styles.horizontalStyle}>
-            <Root style={styles.horizontalStyle}>
+            <Root >
               <TouchableOpacity
                 style={styles.circleImage}
                 onPress={onTestPress}>
@@ -119,21 +161,14 @@ class HomeScreen extends React.Component {
                   source={this.state.avatarSource}
                   style={styles.circleImage}
                 />
-
-                {/* {this.state.avatarSource && (
-                        <Image
-                        source={{uri: this.state.avatarSource}}
-                        style={styles.circleImage}
-                        />  
-                    )}*/}
               </TouchableOpacity>
             </Root>
             <TextInput
               style={styles.userNameText}
               placeholderTextColor="white"
               maxLength={40}
-              multiline={true}
-              placeholder="Input your name"
+              multiline={false}
+              placeholder="Your name"
             />
 
             <View style={styles.horizontalStyleDateTime}>
@@ -149,26 +184,35 @@ class HomeScreen extends React.Component {
             <View style={styles.percentHorizontal1}>
               <View style={styles.progressBarStyle}>
                 <ProgressCircle
-                  percent={30}
+                  percent={
+                    (this.state.expenseMoney * 100) / this.state.incomeMoney
+                  }
                   radius={60}
-                  borderWidth={8}
+                  borderWidth={Size.h20}
                   color={Color.progressBarInColor}
-                  shadowColor="#999"
+                  shadowColor='#999'
                   width={100}
                   marginLeft={200}
-                  bgColor={Color.progressBarOutColor}>
-                  <Text style={styles.textProgress}>{'30%'}</Text>
+                  bgColor={Color.progressBarOutColor}
+                  >
+                  <Text style={styles.textProgress}>
+                    {Math.round(
+                      ((this.state.expenseMoney * 100) /
+                        this.state.incomeMoney) *
+                        100,
+                    ) / 100}%
+                  </Text>
                 </ProgressCircle>
               </View>
 
               <View style={styles.backgroudMoneyCurrent}>
                 <Text style={styles.textCurrentStyle}>Current</Text>
-                <Text style={styles.textMoney}>2000000 VND</Text>
+                <Text style={styles.textMoney}>{currentMoney} VND</Text>
               </View>
             </View>
 
             <View style={styles.percentHorizontal}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={plusMoneyPress}>
                 <View style={styles.backgroudImcomeOutCome}>
                   <View style={styles.percentHorizontal}>
                     <Text style={styles.textImcome}> Income</Text>
@@ -179,7 +223,9 @@ class HomeScreen extends React.Component {
                       color={Color.greenTextColor}
                     />
                   </View>
-                  <Text style={styles.textMoney2}>3000000 VND</Text>
+                  <Text style={styles.textMoney2}>
+                    {this.state.incomeMoney} VND
+                  </Text>
                 </View>
               </TouchableOpacity>
 
@@ -194,7 +240,9 @@ class HomeScreen extends React.Component {
                       color={Color.redTextColor}
                     />
                   </View>
-                  <Text style={styles.textMoney2}>1000000 VND</Text>
+                  <Text style={styles.textMoney2}>
+                    {this.state.expenseMoney} VND
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -208,46 +256,81 @@ class HomeScreen extends React.Component {
               <TouchableOpacity
                 style={styles.horizontalStyle}
                 onPress={onPressButton}>
-                <Ionicons name="search" size={20} color="white" onPress={showPicker}/>
+                <Ionicons
+                  name="search"
+                  size={20}
+                  color="white"
+                  onPress={showPicker}
+                />
 
                 <View>
-                  {this.state.show && (<DatePicker
-                
-                    mode="date" //The enum of date, datetime and time
-                    format="DD-MM-YYYY"
-                    date={this.state.DateSearch}
-                    cancelBtnText="Cancel"
-                    showIcon={false}
-                    textColor= 'white'
-                    confirmBtnText="Confirm"
-                    style={{backgroundColor:'white'}}
-                    customStyles={{
-                      dateIcon: {
-                        alignContent: 'center',
-                        justifyContent: 'center',
-                      },
-                      dateInput: {
-                        textColor: 'white',
-                        alignContent: 'center',
-                        justifyContent: 'center',
-                        
-                      },
-                    }}
-                    // iconSource={caretdown}
-                    onDateChange={(date) => {
-                      this.setState({DateSearch: date});
-                    }}
-                  />)}
+                  {this.state.show && (
+                    <DatePicker
+                      mode="date" //The enum of date, datetime and time
+                      value={this.state.date}
+                      is24Hour={true}
+                      // dateFormat="YYYY MM DD"
+                      dateFormat="year day month"
+                      display="default"
+                      onChange={onChangeDate}
+                    />
+                  )}
                 </View>
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.Line}></View>
-          <FlatList
-            data={this.state.data}
-            renderItem={({item}) => (
-              <Text style={styles.textWhile}>{item.key}</Text>
+          <SectionList
+            sections={DATA}
+            renderSectionHeader={({section: {title}}) => (
+              <Text style={styles.titleListHistoryStyle}>{title}</Text>
             )}
+            renderItem={({item}) => (
+              <View>
+                <View style={styles.horizontalStyle}>
+                  <Image source={incomeIcon} style={styles.iconIncomeStyle} />
+                  <View>
+                    <Text style={styles.categoryListHistoryStyle}>
+                      {item.category}
+                    </Text>
+                    <View style={styles.horizontalStyle}>
+                      <AntDesign
+                        marginLeft={30}
+                        name="plus"
+                        size={15}
+                        
+                        style={style.iconIncomeStyle2}
+                        color={Color.greenTextColor}
+                      />
+                      <Text style={styles.incomeListHistoryStyle}>
+                        {item.income}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.horizontalStyle}>
+                  <Image source={expenseIcon} style={styles.iconIncomeStyle} />
+                  <View>
+                    <Text style={styles.categoryListHistoryStyle}>
+                      {item.category}
+                    </Text>
+                    <View style={styles.horizontalStyle}>
+                      <AntDesign
+                        marginLeft={30}
+                        name="minus"
+                        size={15}
+                        style={style.iconIncomeStyle2}
+                        color={Color.redTextColor}
+                      />
+                      <Text style={styles.expenseListHistoryStyle}>
+                        {item.expense}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            )}
+            keyExtractor={(id) => id}
           />
         </ImageBackground>
       </View>

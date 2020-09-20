@@ -1,11 +1,9 @@
 import * as React from "react";
 import {
   View,
-  StyleSheet,
   Text,
   Image,
   ImageBackground,
-  Dimensions,
 } from "react-native";
 import MainBackGround from "../assets/background.jpg";
 import styles from '../values/style'
@@ -16,7 +14,7 @@ import styles from '../values/style'
       
         <ImageBackground source={MainBackGround} style={styles.imageStyle}>
           <View>
-            <Text style={styles.whiteText}> CategoryScreen </Text>
+            <Text style={styles.textWhile}> AddScreen </Text>
           </View>
         </ImageBackground>
      

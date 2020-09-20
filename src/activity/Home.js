@@ -9,7 +9,6 @@ import {
   Image,
 } from "react-native";
 
-import AddScreen from "../Screens/AddScreen";
 import CategoryScreen from "../Screens/CategoryScreen";
 import HomeScreen from "../Screens/HomeScreen";
 import SettingsScreen from "../Screens/SettingsScreen";
@@ -25,30 +24,17 @@ import BottomNavigator from "./index";
 
 const Tab = createBottomTabNavigator();
 export default class Home extends Component {
-  constructor(props) {
-    super();
-    this.state = {
-      categories: [
-        { id: "1", name: "Món Gà" },
-        { id: "2", name: "Món Heo" },
-        { id: "3", name: "Món Bò" },
-        { id: "4", name: "Món Cá" },
-        { id: "5", name: "Món Chay" },
-        { id: "6", name: "Món Tráng miệng" },
-        { id: "7", name: "Món Ngon" },
-        { id: "8", name: "Món Hay" },
-        { id: "9", name: "Món Lạ" },
-      ],
-    };
-  }
+  
   render() {
-    const { categories } = this.state;
+    
     const { navigation } = this.props;
     return (
      // <BottomNavigator/>
       <View style={styles.container}>
         <Tab.Navigator 
-          screenOptions={({ route }) => ({
+          screenOptions={({ route }) => (
+            
+            {
             tabBarIcon: ({ focused, color, size }) => {
               if (route.name === "Home") {
                 iconName = focused ? "ios-home" : "md-home";
@@ -87,8 +73,7 @@ export default class Home extends Component {
 
         >
           <Tab.Screen name="Home" component={HomeScreen}/>
-          <Tab.Screen name="Category" component={CategoryScreen} />
-          <Tab.Screen name="Add" component={AddScreen} />
+          <Tab.Screen name="Category" component={CategoryScreen} options={{ headerShown: false }}/>
           <Tab.Screen name="Statistic" component={StatisticScreen} />
           <Tab.Screen name="Settings" component={SettingsScreen} />
         </Tab.Navigator>

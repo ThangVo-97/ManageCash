@@ -9,17 +9,14 @@ import { StyleSheet
 
 
 import Home from './src/activity/Home'
-import ListFood from './src/component/ListFood'
-import Category from './src/activity/Category'
 import Introduction from './src/activity/IntroductionScreen'
-import Color from './src/config/color'
+import Color from './src/values/color'
 
 
 const Stack = createStackNavigator();
 export default  App = () =>(
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="ListFood" component={ListFood} />
           <Stack.Screen name="Home" component={Home} 
           options={{
             title: "Manage Cash",
@@ -28,11 +25,8 @@ export default  App = () =>(
               backgroundColor: Color.headerBackgroudColor,
             }
           }}
-            
             />
-
-          <Stack.Screen name="Category" component={Category} />
-          <Stack.Screen
+         <Stack.Screen
             name="Introduction"
             component={Introduction}
             options={{ headerShown: false }}

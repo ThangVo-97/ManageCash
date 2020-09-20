@@ -1,4 +1,5 @@
 export default{
+    //config
     continueButtonColor: "#750453",
     continueContainerColor:"#773a63",
     contentWelcomeColor:"#E0E0E0",
@@ -8,9 +9,11 @@ export default{
     contentReasonColor:"#212121",
     containerReasonColor:"rgb(255,213,69)",
     
+    // header
     headerTitleColor:"#2a8edd",
     headerBackgroudColor:"#03111c",
 
+    // text homeScreen
     yellowTextColor:"#fff600",
     blueTextColor:"#6ba1c9",
     greenTextColor:"#00ff2a",

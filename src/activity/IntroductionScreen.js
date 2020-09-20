@@ -6,7 +6,7 @@ import WelComeGif from "../assets/welcome.gif";
 import Reason from "../assets/reason.gif";
 import Target from "../assets/target.gif";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Color from '../config/color';
+import Color from '../values/color';
 
 export default class IntroductionScreen extends React.Component {
   componentDidMount(){

@@ -1,8 +1,8 @@
 
 import { StyleSheet, Dimensions } from 'react-native';
 
-import Size from "../config/dimens";
-import Color from "../config/color";
+import Size from "../values/dimens";
+import Color from "../values/color";
 
 const widthScreen = Dimensions.get("screen").width;
 const heightScreen = Dimensions.get("screen").height;
@@ -19,7 +19,7 @@ export default StyleSheet.create({
       inputType: {
         color: "white",
         width: widthScreen,
-        marginLeft: 20,
+        marginLeft: Size.s40,
         fontSize: Size.fontSizeMoney,
       },
       listHistory: {
@@ -42,15 +42,15 @@ export default StyleSheet.create({
       },
     
       backgroudImcomeOutCome: {
-        borderRadius: 5,
-        padding: 10,
-        margin: 10,
+        borderRadius: Size.h10,
+        padding: Size.h20,
+        margin: Size.h20,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: Color.frameIncomeExpenseColor,
       },
       backgroudMoneyCurrent: {
-        margin: 20,
+        margin: Size.h40,
         alignItems: "center",
         justifyContent: "center",
       },
@@ -63,15 +63,15 @@ export default StyleSheet.create({
         fontSize: Size.fontSizeMoney,
       },
       textImcome: {
-        marginRight: 40,
+        marginRight: Size.h80,
         color: Color.blueTextColor,
         fontSize: Size.fontSizeIncomeExpense,
-        marginLeft: 18,
+        marginLeft: Size.h36,
       },
       textMoney2: {
         color: Color.yellowTextColor,
         fontSize: Size.fontSizeMoney2,
-        marginLeft: 20,
+        marginLeft: Size.h40,
       },
       percentHorizontal: {
         flexDirection: "row",
@@ -81,18 +81,18 @@ export default StyleSheet.create({
         // width:  widthScreen - 50,
       },
       progressBarStyle: {
-        marginRight: 50,
+        marginRight: Size.h100,
       },
       currentUnitBackground: {
         backgroundColor: Color.frameCurrentColor,
-        borderRadius: 10,
-        padding: 10,
+        borderRadius: Size.h20,
+        padding: Size.h20,
         justifyContent: "center",
         alignItems: "center",
-        margin: 10,
+        margin: Size.h20,
       },
       textProgress: {
-        fontSize: 30,
+        fontSize: Size.s60,
         color: Color.greenTextColor,
       },
       imageStyle: {
@@ -101,44 +101,68 @@ export default StyleSheet.create({
         height: heightScreen,
       },
       circleImage: {
-        width: 60,
-        height: 60,
+        width: Size.s160,
+        height: Size.s160,
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: 40,
-        margin: 20,
+        borderRadius: Size.s80,
+        margin: Size.s20,
         backgroundColor: "grey",
       },
       textWhile: {
-        fontSize: 20,
+        fontSize: Size.h40,
         color: "white",
-        marginLeft: 10,
+        marginLeft: Size.h20,
     
-        marginRight: 20,
+        marginRight: Size.h40,
       },
       userNameText: {
-        fontSize: 20,
+        fontSize: Size.h40,
         color: "white",
-        marginLeft: 10,
-        maxWidth: 150,
-    
-        marginRight: 20,
+        alignSelf:'center',
+        justifyContent:'center',
+        marginRight: Size.s160,
       },
       horizontalStyle: {
         flexDirection: "row",
         
-        alignItems: "center",
+      },
+      iconIncomeStyle:{
+        width:Size.h80,
+        height:Size.h80,
+        margin: Size.h16,
+      },
+      iconIncomeStyle2:{
+        margin: Size.s10,
+      },
+      categoryListHistoryStyle:{
+        color: Color.blueTextColor,
+        fontSize:Size.fontSizeMoney,
+        margin: Size.s2,
+      },
+      incomeListHistoryStyle:{
+        color: Color.greenTextColor,
+        fontSize:Size.fontSizeMoney2,
+        margin: Size.s2,
+      },
+      expenseListHistoryStyle:{
+        color: Color.redTextColor,
+        fontSize:Size.fontSizeMoney2,
+        margin: Size.s2,
+      },
+      titleListHistoryStyle:{
+        color:Color.yellowTextColor,
+        fontSize:Size.fontSizeMoney,
+        margin:Size.s5,
       },
       horizontalStyleDateTime: {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
-        marginTop: 22,
-        height: 35,
-        width: 120,
-    
+        height: Size.h80,
+        width: Size.s240,
         backgroundColor: Color.frameMonthColor,
-        borderRadius: 8,
-        marginLeft: 10,
+        borderRadius: Size.h16,
+        marginLeft: Size.h10,
       },
 })
