@@ -2,6 +2,7 @@
     This app for everyone to manage their money
 ###
 Some library i use:
+- 
     - "@react-native-community/cameraroll": "^4.0.0",
     - "@react-native-community/datetimepicker": "^3.0.2",
     - "@react-native-community/masked-view": "^0.1.10",
