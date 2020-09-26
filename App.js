@@ -7,7 +7,7 @@ import { StyleSheet
 
 } from "react-native";
 
-
+import Add from './src/component/AddScreen' 
 import Home from './src/activity/Home'
 import Introduction from './src/activity/IntroductionScreen'
 import Color from './src/values/color'
@@ -29,6 +29,11 @@ export default  App = () =>(
          <Stack.Screen
             name="Introduction"
             component={Introduction}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Add"
+            component={Add}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

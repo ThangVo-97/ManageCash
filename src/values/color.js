@@ -25,4 +25,9 @@ export default{
     progressBarOutColor:"#06314d",
     progressBarInColor:"#065079",
 
+    // add screen
+    frameTabColor:"#010d19",
+    frameAddPlusMoney:"#072d49",
+    frameTabColorIncome:'#217317',
+    placeholderTextColor:"#14f3eb"
 }

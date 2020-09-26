@@ -54,6 +54,7 @@ export default StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
       },
+      
       textCurrentStyle: {
         color: Color.blueTextColor,
         fontSize: Size.fontSizeCurrent,
@@ -125,8 +126,23 @@ export default StyleSheet.create({
       },
       horizontalStyle: {
         flexDirection: "row",
-        
       },
+      horizontalStyle2: {
+        flexDirection: "row",
+        width: widthScreen,
+      },
+      horizontalStyle3: {
+        flexDirection: "row",
+        justifyContent:'flex-start',
+        alignItems:'center',
+      },
+      horizontalStyle4: {
+        flexDirection: "row",
+        justifyContent:'center',
+        alignItems:'center',
+      },
+      
+
       iconIncomeStyle:{
         width:Size.h80,
         height:Size.h80,
@@ -164,5 +180,69 @@ export default StyleSheet.create({
         backgroundColor: Color.frameMonthColor,
         borderRadius: Size.h16,
         marginLeft: Size.h10,
+      },
+
+      //Add screen style
+      headerAddText:{
+        color:'yellow',
+        flex:9,
+        alignSelf:'center',
+        justifyContent:'center',
+      }, 
+      addPlusMoneyBackground:{
+        marginTop:Size.h100,
+        borderRadius: Size.h30,
+        padding:Size.h20,
+        backgroundColor:Color.frameAddPlusMoney,
+        margin:Size.h40
+      },
+
+      AddPlusMoneyTextMoney:{
+        fontSize:Size.s70,
+        flex: 1,
+        color: Color.yellowTextColor,
+      },
+      AddPlusMoneyInputMoney:{
+        flex: 5,
+        color:'white',
+        fontSize:Size.s80,
+        margin:Size.h10,
+      },
+      addPlusMoneyDateTextMoney:{
+        flex: 6,
+        color:'white',
+        fontSize:Size.s50,
+        padding:Size.h10,
+        margin:Size.h20,
+        color:Color.placeholderTextColor
+      },
+      addPlusMoneyDescriptionInputMoney:{
+        flex: 6,
+        color:'white',
+        fontSize:Size.s50,
+        margin:Size.h10
+      },
+      iconDescription:{
+        height:Size.s100,
+        width:Size.s100,
+        flex:1
+      },
+      addPlusMoneyOK:{
+        backgroundColor:'green',
+        borderRadius:20,
+        width:Size.s260,
+        justifyContent:'center',
+        alignItems:'center',
+        margin:Size.h10,
+        marginRight:Size.s60,
+      },
+      addPlusMoneyCancel:{
+        backgroundColor: Color.redTextColor,
+        borderRadius:20,
+        width:Size.s260,
+        marginLeft:Size.s60,
+        margin:Size.h10,
+        justifyContent:'center',
+        alignItems:'center',
       },
 })

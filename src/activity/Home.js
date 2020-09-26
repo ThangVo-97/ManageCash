@@ -16,7 +16,7 @@ import StatisticScreen from "../Screens/StatisticScreen";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-
+import Add from '../component/AddScreen'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -73,6 +73,7 @@ export default class Home extends Component {
 
         >
           <Tab.Screen name="Home" component={HomeScreen}/>
+          
           <Tab.Screen name="Category" component={CategoryScreen} options={{ headerShown: false }}/>
           <Tab.Screen name="Statistic" component={StatisticScreen} />
           <Tab.Screen name="Settings" component={SettingsScreen} />

@@ -147,7 +147,7 @@ class HomeScreen extends React.Component {
       onClickAddImage();
     };
     const plusMoneyPress=()=>{
-      this.props.navigation.navigate('Category')
+      this.props.navigation.navigate('Add')
     }
     return (
       <View style={styles.container}>
