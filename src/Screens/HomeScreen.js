@@ -1,47 +1,83 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
   Image,
   ImageBackground,
   TextInput,
+  I18nManager,
   FlatList,
+  Modal,
+  AsyncStorage,
+  StyleSheet,
+  TouchableHighlight,
   SectionList,
-} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+} from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 // import ImagePicker from 'react-native-image-picker';
-import ImagePicker from 'react-native-image-picker';
-import Color from '../values/color';
-import MainBackGround from '../assets/background.jpg';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import ProgressCircle from 'react-native-progress-circle';
-import incomeIcon from '../assets/income.png';
+import ImagePicker from "react-native-image-picker";
+import Color from "../values/color";
+import MainBackGround from "../assets/background.jpg";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import ProgressCircle from "react-native-progress-circle";
+import incomeIcon from "../assets/income.png";
 import expenseIcon from '../assets/expense.png';
-// import moment from 'moment'
-// import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-import DatePicker from '@react-native-community/datetimepicker';
-import {Root} from 'native-base';
-import styles from '../values/style';
-import Size from '../values/dimens'
-import style from '../values/style';
+import DatePicker from "@react-native-community/datetimepicker";
+import { Root } from "native-base";
+import styles from "../values/style";
+import Sizes from "../values/dimens";
+import style from "../values/style";
+
+
+// import { JsonSerializationReplacer } from "realm";
+
+const AVATAR_KEY = "AVATAR"
+const NAME_KEY = "NAME"
+// import ImagePickerIOS from "@react-native-community/image-picker-ios";
+// const Realm = require('realm');
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       visibility: false,
-      DateSearch: '',
+      DateSearch: "",
       date: new Date(),
       incomeMoney: 5000000,
       expenseMoney: 1200000,
       show: false,
-      avatarSource: {},
+      avatarSource: '',
+      name: '',
+      modalVisible: false,
+
+      realm: null,
     };
   }
 
+  
+   async componentDidMount() {
+    AsyncStorage.multiGet([NAME_KEY, AVATAR_KEY]).then((value) => {
+      
+      this.setState({ 
+      name:value[0][1],
+      avatarSource: JSON.parse(value[1][1]),
+     })
+    }
+    )
+  }
+  // componentWillUnmount() {
+  //   const { realm } = this.state;
+  //   if (realm !== null && !realm.isClosed) {
+  //     realm.close();
+  //   }
+  // }
   render() {
+    // const info = this.state.realm
+    //   ? this.state.realm.objects('User')[0].name
+    //   : 'Loading...';
+
     monthCurrent = new Date().getMonth() + 1;
     yearCurrent = new Date().getFullYear();
     currentMoney = this.state.incomeMoney - this.state.expenseMoney;
@@ -49,46 +85,46 @@ class HomeScreen extends React.Component {
 
     var DATA = [
       {
-        title: '20/9/2020',
+        title: "20/9/2020",
         data: [
           {
-            id: '1',
-            income: '2000000',
-            expense: '1000000',
-            category: 'Classify',
+            id: "1",
+            income: "2000000",
+            expense: "1000000",
+            category: "Classify",
           },
         ],
       },
       {
-        title: '19/9/2020',
+        title: "19/9/2020",
         data: [
           {
-            id: '1',
-            income: '2000000',
-            expense: '1000000',
-            category: 'Classify',
+            id: "1",
+            income: "2000000",
+            expense: "1000000",
+            category: "Classify",
           },
         ],
       },
       {
-        title: '18/9/2020',
+        title: "18/9/2020",
         data: [
           {
-            id: '1',
-            income: '2000000',
-            expense: '1000000',
-            category: 'Classify',
+            id: "1",
+            income: "2000000",
+            expense: "1000000",
+            category: "Classify",
           },
         ],
       },
       {
-        title: '18/9/2020',
+        title: "18/9/2020",
         data: [
           {
-            id: '1',
-            income: '2000000',
-            expense: '1000000',
-            category: 'Classify',
+            id: "1",
+            income: "2000000",
+            expense: "1000000",
+            category: "Classify",
           },
         ],
       },
@@ -102,73 +138,93 @@ class HomeScreen extends React.Component {
       });
     };
     const onChangeDate = (event, selectedDate) => {
-      console.log('currentDate ' + selectedDate);
+      console.log("currentDate " + selectedDate);
       this.setState({
         date: selectedDate,
         show: false,
       });
-      console.log('date ' + this.state.date);
+      console.log("date " + this.state.date);
     };
 
     onPressButton = () => {
-      this.setState({visibility: true});
+      this.setState({ visibility: true });
     };
 
     const options = {
-      title: 'Select Avatar',
+      title: "Select Avatar",
       storageOptions: {
         skipBackup: true,
-        path: 'images',
+        customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+        path: "images",
       },
     };
-    onClickAddImage = () => {
-      ImagePicker.showImagePicker(options, (response) => {
-        console.log('Response = ', response);
+    onClickAddImage = async () => {
+      
+ImagePicker.showImagePicker(options, (response) => {
 
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-        } else if (response.customButton) {
-          console.log('User tapped custom button: ', response.customButton);
-        } else {
-          const source = {uri: response.uri};
+  let source;
+  if (response.didCancel) {
+    console.log('User cancelled image picker');
+  } else if (response.error) {
+    console.log('ImagePicker Error: ', response.error);
+  } else if (response.customButton) {
+    console.log('User tapped custom button: ', response.customButton);
+  } else {
+    source = { uri: response.uri };
 
-          // You can also display the image using data:
-          // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+    // You can also display the image using data:
+    // const source2 = { uri: 'data:image/jpeg;base64,' + response.data };
 
-          this.setState({
-            avatarSource: source,
-          });
-        }
-      });
+    this.setState({
+      avatarSource: source.uri,
+    });
+    console.log('source ' + this.state.avatarSource)
+    AsyncStorage.setItem(AVATAR_KEY, JSON.stringify(this.state.avatarSource));
+    
+
+  }
+});
+     
     };
-    onTestPress = () => {
-      onClickAddImage();
+    const plusMoneyPress = () => {
+      this.props.navigation.navigate("Add", { index: 0 });
     };
-    const plusMoneyPress=()=>{
-      this.props.navigation.navigate('Add')
-    }
+    const MinusMoneyPress = () => {
+      this.props.navigation.navigate("Add", { index: 1 });
+    };
     return (
       <View style={styles.container}>
         <ImageBackground source={MainBackGround} style={styles.imageStyle}>
-          <View style={styles.horizontalStyle}>
-            <Root >
-              <TouchableOpacity
-                style={styles.circleImage}
-                onPress={onTestPress}>
-                <Image
-                  source={this.state.avatarSource}
-                  style={styles.circleImage}
-                />
-              </TouchableOpacity>
-            </Root>
+          <View style={styles.horizontalStyle}
+          >
+
+            <TouchableOpacity
+              style={styles.circleImage}
+              onPress={onClickAddImage}
+            >
+              <Image
+                style={{
+                  width: Sizes.s160,
+                  height: Sizes.s160,
+                  borderRadius: Sizes.s80,
+                }}
+              //  source={{uri: this.state.avatarSource}}
+              source={{uri: this.state.avatarSource}}
+               />
+               
+            </TouchableOpacity>
+
             <TextInput
               style={styles.userNameText}
               placeholderTextColor="white"
               maxLength={40}
-              multiline={false}
-              placeholder="Your name"
+              multiline={true}
+              value={this.state.name}
+              onChangeText={(value) => {
+                AsyncStorage.setItem(NAME_KEY, value);
+                this.setState({ name: value })
+              }}
+              placeholder={this.state.name}
             />
 
             <View style={styles.horizontalStyleDateTime}>
@@ -188,19 +244,20 @@ class HomeScreen extends React.Component {
                     (this.state.expenseMoney * 100) / this.state.incomeMoney
                   }
                   radius={60}
-                  borderWidth={Size.h20}
+                  borderWidth={Sizes.h20}
                   color={Color.progressBarInColor}
-                  shadowColor='#999'
+                  shadowColor="#999"
                   width={100}
                   marginLeft={200}
                   bgColor={Color.progressBarOutColor}
-                  >
+                >
                   <Text style={styles.textProgress}>
                     {Math.round(
                       ((this.state.expenseMoney * 100) /
                         this.state.incomeMoney) *
-                        100,
-                    ) / 100}%
+                      100
+                    ) / 100}
+                    %
                   </Text>
                 </ProgressCircle>
               </View>
@@ -229,7 +286,7 @@ class HomeScreen extends React.Component {
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity>
+              <TouchableOpacity onPress={MinusMoneyPress}>
                 <View style={styles.backgroudImcomeOutCome}>
                   <View style={styles.percentHorizontal}>
                     <Text style={styles.textImcome}> Expense</Text>
@@ -247,15 +304,16 @@ class HomeScreen extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
-
+          <View style={styles.Line} />
           {/* List History */}
           <View>
-            <View style={styles.horizontalStyle}>
+            <View style={[styles.horizontalStyle, {alignItems:'center'}]}>
               <Text style={styles.textWhile}>History</Text>
 
               <TouchableOpacity
-                style={styles.horizontalStyle}
-                onPress={onPressButton}>
+                style={[styles.horizontalStyle, {marginLeft:Sizes.s20, alignItems:'center', marginTop:Sizes.s10}]}
+                onPress={onPressButton}
+              >
                 <Ionicons
                   name="search"
                   size={20}
@@ -279,13 +337,14 @@ class HomeScreen extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.Line}></View>
+          
           <SectionList
+            style={{marginBottom:Sizes.s100}}
             sections={DATA}
-            renderSectionHeader={({section: {title}}) => (
+            renderSectionHeader={({ section: { title } }) => (
               <Text style={styles.titleListHistoryStyle}>{title}</Text>
             )}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <View>
                 <View style={styles.horizontalStyle}>
                   <Image source={incomeIcon} style={styles.iconIncomeStyle} />
@@ -298,7 +357,6 @@ class HomeScreen extends React.Component {
                         marginLeft={30}
                         name="plus"
                         size={15}
-                        
                         style={style.iconIncomeStyle2}
                         color={Color.greenTextColor}
                       />
@@ -337,4 +395,43 @@ class HomeScreen extends React.Component {
     );
   }
 }
+
+const styless = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  openButton: {
+    backgroundColor: "#F194FF",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+  },
+});
 export default HomeScreen;

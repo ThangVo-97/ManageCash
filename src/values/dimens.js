@@ -38,6 +38,7 @@ const scaleValue =
     s120: 120,
     s140: 140,
     s160: 160,
+    s170: 170,
     s180: 180,
     s200: 200,
     s210: 210,
@@ -45,13 +46,18 @@ const scaleValue =
     s230: 230,
     s240: 240,
     s260: 260,
+    s300: 300,
     s320: 320,
     s340: 340,
     s370: 370,
     s400: 400,
     s420: 420,
     s440: 440,
+    s500: 500,
     s570: 570,
+    s600: 600,
+    s700: 700,
+    s740: 700,
     s70: 70,
     h10: 10,
     h12: 12,
@@ -80,6 +86,8 @@ const scaleValue =
     h100: 100,
   };
   const Sizes = {
+    sizeDefault: sizeDefault,
+
     h10: scale(basicSize.h10),
     h12: scale(basicSize.h12),
     h14: scale(basicSize.h14),
@@ -128,10 +136,24 @@ const scaleValue =
     s120: scale(basicSize.s120),
     s140: scale(basicSize.s140),
     s160: scale(basicSize.s160),
+    s170: scale(basicSize.s170),
     s200: scale(basicSize.s200),
     s240: scale(basicSize.s240),
     s260: scale(basicSize.s260),
+    
+    s300: scale(basicSize.s300),
     s340: scale(basicSize.s340),
+    s370: scale(basicSize.s370),
+    s400: scale(basicSize.s400),
+    s420: scale(basicSize.s420),
+    s440: scale(basicSize.s440),
+    s500: scale(basicSize.s500),
+    s570: scale(basicSize.s570),
+    s600: scale(basicSize.s600),
+    s700: scale(basicSize.s700),
+    s740: scale(basicSize.s740),
+
+
 
     fontSizeMoney: scale(basicSize.h36), // size 18
     fontSizeCurrent: scale(basicSize.s50), // size 25

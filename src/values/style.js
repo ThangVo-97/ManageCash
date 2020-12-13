@@ -3,18 +3,22 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 import Size from "../values/dimens";
 import Color from "../values/color";
+import Sizes from '../values/dimens';
 
 const widthScreen = Dimensions.get("screen").width;
 const heightScreen = Dimensions.get("screen").height;
-
+const screenSize = Dimensions.get('window')
 export default StyleSheet.create({
     container: {
         backgroundColor: "#000000FF",
+      
       },
       Line: {
-        height: 0.2,
+        height: 1,
         width: widthScreen,
-        backgroundColor: "white",
+        backgroundColor: "rgba(255, 255, 255, 0.17)",
+        marginLeft:Sizes.s20,
+        marginRight:Sizes.s20,
       },
       inputType: {
         color: "white",
@@ -96,11 +100,6 @@ export default StyleSheet.create({
         fontSize: Size.s60,
         color: Color.greenTextColor,
       },
-      imageStyle: {
-        resizeMode: "cover",
-        width: widthScreen,
-        height: heightScreen,
-      },
       circleImage: {
         width: Size.s160,
         height: Size.s160,
@@ -114,22 +113,19 @@ export default StyleSheet.create({
         fontSize: Size.h40,
         color: "white",
         marginLeft: Size.h20,
-    
-        marginRight: Size.h40,
+        
       },
       userNameText: {
         fontSize: Size.h40,
         color: "white",
+        // backgroundColor:'red',
         alignSelf:'center',
         justifyContent:'center',
-        marginRight: Size.s160,
+        marginRight: Sizes.s20,
+        width:Sizes.s70*5,
       },
       horizontalStyle: {
         flexDirection: "row",
-      },
-      horizontalStyle2: {
-        flexDirection: "row",
-        width: widthScreen,
       },
       horizontalStyle3: {
         flexDirection: "row",
@@ -141,7 +137,25 @@ export default StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
       },
-      
+      headerAddText: {
+        color: 'yellow',
+        flex: 5,
+        fontFamily: 'Uchen',
+        fontSize: Size.s60,
+        marginBottom: Size.s80,
+    
+      },
+    
+      horizontalStyle2: {
+        flexDirection: "row",
+        width: screenSize.width,
+        alignItems: 'center',
+      },
+      imageStyle: {
+        resizeMode: "cover",
+        width: screenSize.width,
+        height: screenSize.height,
+      },
 
       iconIncomeStyle:{
         width:Size.h80,
@@ -176,19 +190,13 @@ export default StyleSheet.create({
         alignItems: "center",
         flexDirection: "row",
         height: Size.h80,
-        width: Size.s240,
+        width: Size.s260,
         backgroundColor: Color.frameMonthColor,
         borderRadius: Size.h16,
-        marginLeft: Size.h10,
       },
 
       //Add screen style
-      headerAddText:{
-        color:'yellow',
-        flex:9,
-        alignSelf:'center',
-        justifyContent:'center',
-      }, 
+     
       addPlusMoneyBackground:{
         marginTop:Size.h100,
         borderRadius: Size.h30,
@@ -206,6 +214,7 @@ export default StyleSheet.create({
         flex: 5,
         color:'white',
         fontSize:Size.s80,
+        color:Color.yellowTextColor,
         margin:Size.h10,
       },
       addPlusMoneyDateTextMoney:{
@@ -219,10 +228,30 @@ export default StyleSheet.create({
       addPlusMoneyDescriptionInputMoney:{
         flex: 6,
         color:'white',
+        color:Color.placeholderTextColor,
         fontSize:Size.s50,
         margin:Size.h10
       },
+      addMinusMoneyCategoryInputMoney:{
+        flex: 5,
+        color:'white',
+        color:Color.placeholderTextColor,
+        fontSize:Size.s50,
+        margin:Size.h30
+      },
+
       iconDescription:{
+        height:Size.s100,
+        width:Size.s100,
+        flex:1
+      },
+      iconCategory:{
+        height:Size.s100,
+        width:Size.s100,
+        flex:1
+      },
+      
+      iconCategory2:{
         height:Size.s100,
         width:Size.s100,
         flex:1
