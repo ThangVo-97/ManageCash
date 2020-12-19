@@ -18,16 +18,14 @@ import {
   TouchableOpacityBase,
   
 } from "react-native";
+import Entypo from "react-native-vector-icons/Entypo"
 import MainBackGround from "../assets/background.jpg";
-import languageIcon from "../assets/language.png";
-import currencyIcon from "../assets/euro-currency-symbol.png";
-import notificationIcon from "../assets/notification.png";
-import timeNotificationIcon from "../assets/timeNotification.png";
-import ratingIcon from "../assets/rating.png";
-import feedbackIcon from "../assets/feedback.png";
-import updateIcon from "../assets/updated.png";
-import resetIcon from "../assets/reset.png";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
+import Ionicons from "react-native-vector-icons/Ionicons"
+import FontAwesome from "react-native-vector-icons/FontAwesome"
+import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import nextIcon from "../assets/nextIcon.png";
+
 import str from "../values/str";
 import Sizes from "../values/dimens";
 import vnLanguage from "../assets/vnLanguage.png";
@@ -137,7 +135,10 @@ class CategoryScreen extends React.Component {
             </Modal>
           <TouchableOpacity onPress={this.onPressLanguage}>
             <View style={styles.containerItem}>
-              <Image source={languageIcon} style={styles.iconStyle} />
+              {/* <Image source={languageIcon} style={styles.iconStyle} /> */}
+              
+              <Entypo name="language" size={24} 
+                      style={styles.iconStyle} color="white"/>
               <View style={styles.containerInsideItem}>
                 <Text style={styles.title}>{str.language}</Text>
                 <Text style={styles.decription}>{str.decriptionLanguage}</Text>
@@ -193,7 +194,8 @@ class CategoryScreen extends React.Component {
             </Modal>
           <TouchableOpacity onPress={this.onPressCurrency}>
             <View style={styles.containerItem}>
-              <Image source={currencyIcon} style={styles.iconStyle} />
+              <MaterialCommunityIcons name="currency-usd" size={30}
+              color="white" style={styles.iconStyle}/>
               <View style={styles.containerInsideItem}>
                 <Text style={styles.title}>{str.currency}</Text>
                 <Text style={styles.decription}>{str.decriptionCurrency}</Text>
@@ -214,7 +216,8 @@ class CategoryScreen extends React.Component {
           {/* Notification */}
           <TouchableOpacity onPress={this.toggleSwitch}>
             <View style={styles.containerItem}>
-              <Image source={notificationIcon} style={styles.iconStyle} />
+              {/* <Image source={notificationIcon} style={styles.iconStyle} /> */}
+              <Ionicons name="notifications" size={24} color="white" style={styles.iconStyle}/>
               <View style={styles.containerInsideItem}>
                 <Text style={styles.title}>{str.notification}</Text>
                 <Text style={styles.decription}>
@@ -268,7 +271,8 @@ class CategoryScreen extends React.Component {
           </Modal>
           <TouchableOpacity onPress={this.onPressRating}>
             <View style={styles.containerItem}>
-              <Image source={ratingIcon} style={styles.iconStyle} />
+              {/* <Image source={ratingIcon} style={styles.iconStyle} /> */}
+              <FontAwesome name="star" size={24} color="white" style={styles.iconStyle}/>
               <View style={styles.containerInsideItem}>
                 <Text style={styles.title}>{str.rating}</Text>
                 <Text style={styles.decription}>{str.descriptionRating}</Text>
@@ -321,7 +325,8 @@ class CategoryScreen extends React.Component {
         </Modal>
           <TouchableOpacity onPress={this.onPressFeedback}>
             <View style={styles.containerItem}>
-              <Image source={feedbackIcon} style={styles.iconStyle} />
+              {/* <Image source={feedbackIcon} style={styles.iconStyle} /> */}
+              <MaterialIcons name="feedback" color="white" size={24} style={styles.iconStyle}/>
               <View style={styles.containerInsideItem}>
                 <Text style={styles.title}>{str.feedback}</Text>
                 <Text style={styles.decription}>{str.descriptionFeedback}</Text>
@@ -349,7 +354,8 @@ class CategoryScreen extends React.Component {
             }
           >
             <View style={styles.containerItem}>
-              <Image source={updateIcon} style={styles.iconStyle} />
+              {/* <Image source={updateIcon} style={styles.iconStyle} /> */}
+              <MaterialIcons name="update" size={24} color="white" style={styles.iconStyle}/>
               <View style={styles.containerInsideItem}>
                 <Text style={styles.title}>{str.update}</Text>
                 <Text style={styles.decription}>{str.descriptionUpdate}</Text>
@@ -394,7 +400,8 @@ class CategoryScreen extends React.Component {
           </Modal>
           <TouchableOpacity onPress={this.onPressReset}>
             <View style={styles.containerItem}>
-              <Image source={resetIcon} style={styles.iconStyle} />
+              {/* <Image source={resetIcon} style={styles.iconStyle} /> */}
+              <MaterialIcons name="settings" color="white" size={24} style={styles.iconStyle} />
               <View style={styles.containerInsideItem}>
                 <Text style={styles.title}>{str.reset}</Text>
                 <Text style={styles.decription}>{str.descriptionReset}</Text>
@@ -468,6 +475,7 @@ feedbackCancel:{
   iconStyle: {
     width: Sizes.s50,
     height: Sizes.s50,
+    resizeMode: "stretch"
   },
   containerItem: {
     flexDirection: "row",

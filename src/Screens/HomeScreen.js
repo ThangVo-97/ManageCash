@@ -15,7 +15,6 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-// import ImagePicker from 'react-native-image-picker';
 import ImagePicker from "react-native-image-picker";
 import Color from "../values/color";
 import MainBackGround from "../assets/background.jpg";
@@ -38,6 +37,8 @@ const AVATAR_KEY = "AVATAR"
 const NAME_KEY = "NAME"
 // import ImagePickerIOS from "@react-native-community/image-picker-ios";
 // const Realm = require('realm');
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
+
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -78,6 +79,7 @@ class HomeScreen extends React.Component {
     //   ? this.state.realm.objects('User')[0].name
     //   : 'Loading...';
 
+    
     monthCurrent = new Date().getMonth() + 1;
     yearCurrent = new Date().getFullYear();
     currentMoney = this.state.incomeMoney - this.state.expenseMoney;
@@ -187,31 +189,29 @@ ImagePicker.showImagePicker(options, (response) => {
      
     };
     const plusMoneyPress = () => {
-      this.props.navigation.navigate("Add", { index: 0 });
+      this.props.navigation.navigate("AddScreen", { index: 0 });
     };
     const MinusMoneyPress = () => {
-      this.props.navigation.navigate("Add", { index: 1 });
+      this.props.navigation.navigate("AddScreen", { index: 1 });
     };
     return (
       <View style={styles.container}>
         <ImageBackground source={MainBackGround} style={styles.imageStyle}>
           <View style={styles.horizontalStyle}
           >
-
             <TouchableOpacity
               style={styles.circleImage}
               onPress={onClickAddImage}
             >
+              
               <Image
-                style={{
-                  width: Sizes.s160,
-                  height: Sizes.s160,
-                  borderRadius: Sizes.s80,
-                }}
-              //  source={{uri: this.state.avatarSource}}
-              source={{uri: this.state.avatarSource}}
-               />
-               
+              style={{
+                width: Sizes.s160,
+                height: Sizes.s160,
+                borderRadius: Sizes.s80,
+              }}
+            source={{uri: this.state.avatarSource}}
+             />
             </TouchableOpacity>
 
             <TextInput
@@ -220,6 +220,7 @@ ImagePicker.showImagePicker(options, (response) => {
               maxLength={40}
               multiline={true}
               value={this.state.name}
+              placeholder="Input your name"
               onChangeText={(value) => {
                 AsyncStorage.setItem(NAME_KEY, value);
                 this.setState({ name: value })

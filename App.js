@@ -11,7 +11,7 @@ import { StyleSheet,
 
 import Home from './src/activity/Home';
 import Color from "./src/values/color";
-
+import AddScreen from "./src/component/AddScreen"
 const Stack = createStackNavigator();
 export default  App = () =>(
   
@@ -26,6 +26,9 @@ export default  App = () =>(
             },
             headerShown: false
           }}
+            />
+            <Stack.Screen name="AddScreen" component={AddScreen}
+              options={{headerShown: false}}
             />
         </Stack.Navigator>
       </NavigationContainer>
