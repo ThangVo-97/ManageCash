@@ -68,18 +68,7 @@ class HomeScreen extends React.Component {
     }
     )
   }
-  // componentWillUnmount() {
-  //   const { realm } = this.state;
-  //   if (realm !== null && !realm.isClosed) {
-  //     realm.close();
-  //   }
-  // }
   render() {
-    // const info = this.state.realm
-    //   ? this.state.realm.objects('User')[0].name
-    //   : 'Loading...';
-
-    
     monthCurrent = new Date().getMonth() + 1;
     yearCurrent = new Date().getFullYear();
     currentMoney = this.state.incomeMoney - this.state.expenseMoney;
