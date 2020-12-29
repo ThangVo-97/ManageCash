@@ -30,8 +30,7 @@ import styles from "../values/style";
 import Sizes from "../values/dimens";
 import style from "../values/style";
 
-
-// import { JsonSerializationReplacer } from "realm";
+import {getListHistory, } from '../services/StorageServices'
 
 const AVATAR_KEY = "AVATAR"
 const NAME_KEY = "NAME"
@@ -51,9 +50,9 @@ class HomeScreen extends React.Component {
       show: false,
       avatarSource: '',
       name: '',
+      history: [],
+      isLoading: false,
       modalVisible: false,
-
-      realm: null,
     };
   }
 
@@ -67,60 +66,30 @@ class HomeScreen extends React.Component {
      })
     }
     )
+
+    
+    this.fetchHistoryData()
+  
+  }
+  fetchHistoryData = () => {
+    this.setState({loading: true})
+
+    getListHistory().then(history => {
+        this.setState({
+            loading: false,
+            history,
+        })
+    }).catch(error => {
+        console.error(error)
+
+        this.setState({loading: false})
+    })
   }
   render() {
     monthCurrent = new Date().getMonth() + 1;
     yearCurrent = new Date().getFullYear();
     currentMoney = this.state.incomeMoney - this.state.expenseMoney;
     this.state.date = new Date();
-
-    var DATA = [
-      {
-        title: "20/9/2020",
-        data: [
-          {
-            id: "1",
-            income: "2000000",
-            expense: "1000000",
-            category: "Classify",
-          },
-        ],
-      },
-      {
-        title: "19/9/2020",
-        data: [
-          {
-            id: "1",
-            income: "2000000",
-            expense: "1000000",
-            category: "Classify",
-          },
-        ],
-      },
-      {
-        title: "18/9/2020",
-        data: [
-          {
-            id: "1",
-            income: "2000000",
-            expense: "1000000",
-            category: "Classify",
-          },
-        ],
-      },
-      {
-        title: "18/9/2020",
-        data: [
-          {
-            id: "1",
-            income: "2000000",
-            expense: "1000000",
-            category: "Classify",
-          },
-        ],
-      },
-    ];
-
     // datetime picker
 
     const showPicker = () => {
@@ -258,6 +227,7 @@ ImagePicker.showImagePicker(options, (response) => {
               </View>
             </View>
 
+            {/* income touch opacity */}
             <View style={styles.percentHorizontal}>
               <TouchableOpacity onPress={plusMoneyPress}>
                 <View style={styles.backgroudImcomeOutCome}>
@@ -330,17 +300,19 @@ ImagePicker.showImagePicker(options, (response) => {
           
           <SectionList
             style={{marginBottom:Sizes.s100}}
-            sections={DATA}
-            renderSectionHeader={({ section: { title } }) => (
-              <Text style={styles.titleListHistoryStyle}>{title}</Text>
+            sections={this.state.history}
+            renderSectionHeader={({ section: { dateCreate } }) => (
+              <Text style={styles.titleListHistoryStyle}>{dateCreate}</Text>
             )}
             renderItem={({ item }) => (
               <View>
                 <View style={styles.horizontalStyle}>
+
+                  {/* income */}
                   <Image source={incomeIcon} style={styles.iconIncomeStyle} />
                   <View>
                     <Text style={styles.categoryListHistoryStyle}>
-                      {item.category}
+                      {item.typeIncomeMoney}
                     </Text>
                     <View style={styles.horizontalStyle}>
                       <AntDesign
@@ -351,16 +323,17 @@ ImagePicker.showImagePicker(options, (response) => {
                         color={Color.greenTextColor}
                       />
                       <Text style={styles.incomeListHistoryStyle}>
-                        {item.income}
+                        {item.incomeMoney}
                       </Text>
                     </View>
                   </View>
                 </View>
+                  {/* expense */}
                 <View style={styles.horizontalStyle}>
                   <Image source={expenseIcon} style={styles.iconIncomeStyle} />
                   <View>
                     <Text style={styles.categoryListHistoryStyle}>
-                      {item.category}
+                      {item.typeExpenseMoney}
                     </Text>
                     <View style={styles.horizontalStyle}>
                       <AntDesign
@@ -371,7 +344,7 @@ ImagePicker.showImagePicker(options, (response) => {
                         color={Color.redTextColor}
                       />
                       <Text style={styles.expenseListHistoryStyle}>
-                        {item.expense}
+                        {item.expenseMoney}
                       </Text>
                     </View>
                   </View>

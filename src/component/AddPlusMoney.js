@@ -8,18 +8,34 @@ import Color from "../values/color";
 import Size from "../values/dimens";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import description from "../assets/description.png";
+import {getIncomeMoney, addIncomeMoney, addHistory} from "../services/StorageServices"
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Form } from "native-base";
 class AddPlusMoney extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       IsShowDate: false,
       date: new Date(),
+      money: '',
+      type: '',
+      listIncomeMoney: [],
     };
   }
 
+  handleAddMoney=(money, date, type)=>{
+    addIncomeMoney(money, date, type);
+    
+            // .then(listIncomeMoney => {
+            //     this.setState({
+            //       listIncomeMoney,
+            //     })
+            // })
+  }
   render() {
+    const {date, money, type} = this.state;
     const onPressOK = () => {
+      this.handleAddMoney(money, date, type);
       this.props.navigation.navigate('Home');
     };
     const onPressCancel = () => {
