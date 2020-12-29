@@ -30,7 +30,7 @@ import styles from "../values/style";
 import Sizes from "../values/dimens";
 import style from "../values/style";
 
-import {getListHistory, } from '../services/StorageServices'
+import { getListHistory, } from '../services/StorageServices'
 
 const AVATAR_KEY = "AVATAR"
 const NAME_KEY = "NAME"
@@ -50,41 +50,52 @@ class HomeScreen extends React.Component {
       show: false,
       avatarSource: '',
       name: '',
-      history: [],
+      histories: [
+      {
+        title: 
+        {dateCreate: '2020'},
+        data: ["Pizza", "Burger", "Risotto"]
+      },
+      {
+        title: {dateCreate: '2020'},
+        data: ["French Fries", "Onion Rings", "Fried Shrimps"]
+      },
+      ],
       isLoading: false,
       modalVisible: false,
     };
   }
 
-  
-   async componentDidMount() {
+
+  async componentDidMount() {
     AsyncStorage.multiGet([NAME_KEY, AVATAR_KEY]).then((value) => {
-      
-      this.setState({ 
-      name:value[0][1],
-      avatarSource: JSON.parse(value[1][1]),
-     })
+
+      this.setState({
+        name: value[0][1],
+        avatarSource: JSON.parse(value[1][1]),
+      })
     }
     )
-
-    
     this.fetchHistoryData()
-  
+  }
+  formatData = (dateCreate, incomeMoney, typeIncomeMoney, expenseMoney, typeExpenseMoney) =>{
+    
   }
   fetchHistoryData = () => {
-    this.setState({loading: true})
+    this.setState({ loading: true })
 
     getListHistory().then(history => {
-        this.setState({
-            loading: false,
-            history,
-        })
+      
+      this.setState({
+        loading: false,
+        histories: [...history], 
+      })
     }).catch(error => {
-        console.error(error)
+      console.error(error)
 
-        this.setState({loading: false})
+      this.setState({ loading: false })
     })
-  }
+  }    
   render() {
     monthCurrent = new Date().getMonth() + 1;
     yearCurrent = new Date().getFullYear();
@@ -119,32 +130,32 @@ class HomeScreen extends React.Component {
       },
     };
     onClickAddImage = async () => {
-      
-ImagePicker.showImagePicker(options, (response) => {
 
-  let source;
-  if (response.didCancel) {
-    console.log('User cancelled image picker');
-  } else if (response.error) {
-    console.log('ImagePicker Error: ', response.error);
-  } else if (response.customButton) {
-    console.log('User tapped custom button: ', response.customButton);
-  } else {
-    source = { uri: response.uri };
+      ImagePicker.showImagePicker(options, (response) => {
 
-    // You can also display the image using data:
-    // const source2 = { uri: 'data:image/jpeg;base64,' + response.data };
+        let source;
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        } else {
+          source = { uri: response.uri };
 
-    this.setState({
-      avatarSource: source.uri,
-    });
-    console.log('source ' + this.state.avatarSource)
-    AsyncStorage.setItem(AVATAR_KEY, JSON.stringify(this.state.avatarSource));
-    
+          // You can also display the image using data:
+          // const source2 = { uri: 'data:image/jpeg;base64,' + response.data };
 
-  }
-});
-     
+          this.setState({
+            avatarSource: source.uri,
+          });
+          console.log('source ' + this.state.avatarSource)
+          AsyncStorage.setItem(AVATAR_KEY, JSON.stringify(this.state.avatarSource));
+
+
+        }
+      });
+
     };
     const plusMoneyPress = () => {
       this.props.navigation.navigate("AddScreen", { index: 0 });
@@ -161,15 +172,15 @@ ImagePicker.showImagePicker(options, (response) => {
               style={styles.circleImage}
               onPress={onClickAddImage}
             >
-              
+
               <Image
-              style={{
-                width: Sizes.s160,
-                height: Sizes.s160,
-                borderRadius: Sizes.s80,
-              }}
-            source={{uri: this.state.avatarSource}}
-             />
+                style={{
+                  width: Sizes.s160,
+                  height: Sizes.s160,
+                  borderRadius: Sizes.s80,
+                }}
+                source={{ uri: this.state.avatarSource }}
+              />
             </TouchableOpacity>
 
             <TextInput
@@ -267,11 +278,11 @@ ImagePicker.showImagePicker(options, (response) => {
           <View style={styles.Line} />
           {/* List History */}
           <View>
-            <View style={[styles.horizontalStyle, {alignItems:'center'}]}>
+            <View style={[styles.horizontalStyle, { alignItems: 'center' }]}>
               <Text style={styles.textWhile}>History</Text>
 
               <TouchableOpacity
-                style={[styles.horizontalStyle, {marginLeft:Sizes.s20, alignItems:'center', marginTop:Sizes.s10}]}
+                style={[styles.horizontalStyle, { marginLeft: Sizes.s20, alignItems: 'center', marginTop: Sizes.s10 }]}
                 onPress={onPressButton}
               >
                 <Ionicons
@@ -297,12 +308,12 @@ ImagePicker.showImagePicker(options, (response) => {
               </TouchableOpacity>
             </View>
           </View>
-          
+
           <SectionList
-            style={{marginBottom:Sizes.s100}}
-            sections={this.state.history}
-            renderSectionHeader={({ section: { dateCreate } }) => (
-              <Text style={styles.titleListHistoryStyle}>{dateCreate}</Text>
+            style={{ marginBottom: Sizes.s100 }}
+            sections={this.state.histories}
+            renderSectionHeader={({ section: { title } }) => (
+              <Text style={styles.titleListHistoryStyle}>{title.dateCreate}</Text>
             )}
             renderItem={({ item }) => (
               <View>
@@ -328,7 +339,7 @@ ImagePicker.showImagePicker(options, (response) => {
                     </View>
                   </View>
                 </View>
-                  {/* expense */}
+                {/* expense */}
                 <View style={styles.horizontalStyle}>
                   <Image source={expenseIcon} style={styles.iconIncomeStyle} />
                   <View>

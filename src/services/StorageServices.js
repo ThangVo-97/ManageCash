@@ -25,6 +25,20 @@ export const addHistory = (dateCreate, incomeMoney, typeIncomeMoney, expenseMone
     })
 }
 
+
+export const editHistory = (history) => {
+    const histories = realm.objects('History')
+
+    
+    return new Promise(resolve => {
+        realm.write(() => {
+            task.completed = !task.completed
+
+            resolve(histories)
+        })
+    })
+}
+
 export const getAccumulateMoney = () => {
     const AccumulateMoney = realm.objects('accumulateMoney');
     return Promise.resolve(AccumulateMoney);

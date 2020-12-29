@@ -24,8 +24,8 @@ class AddPlusMoney extends React.Component {
   }
 
   handleAddMoney=(money, date, type)=>{
-    addIncomeMoney(money, date, type);
-    
+    addIncomeMoney("12/29/2020", "100000", "Classic");
+    addHistory("12/29/2020", "100000", "Classic", "200000", "Classic");
             // .then(listIncomeMoney => {
             //     this.setState({
             //       listIncomeMoney,
