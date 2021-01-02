@@ -8,7 +8,7 @@ import Color from "../values/color";
 import Size from "../values/dimens";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import description from "../assets/description.png";
-import {getIncomeMoney, addIncomeMoney, addHistory} from "../services/StorageServices"
+import { addIncomeMoney } from "../services/StorageServices"
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Form } from "native-base";
 class AddPlusMoney extends React.Component {
@@ -24,14 +24,8 @@ class AddPlusMoney extends React.Component {
   }
 
   handleAddMoney=(money, date, type)=>{
-    Realm.open({
-      schema: [{ name: 'Dog', properties: { name: 'string' } }]
-  }).then(realm => {
-      realm.write(() => {
-          realm.create('Dog', { name: 'Rex' });
-      });
-     
-  });
+      addIncomeMoney("10000", new Date(), "classic", "", "", "")
+      // addHistoryMoney("1","1","1","1","1","1")
   }
   render() {
     const {date, money, type} = this.state;

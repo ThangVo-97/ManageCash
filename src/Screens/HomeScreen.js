@@ -22,7 +22,7 @@ import { Root } from "native-base";
 import styles from "../values/style";
 import Sizes from "../values/dimens";
 
-import { getListHistoryMoney, addHistoryMoney, getIncomeMoney} from '../services/StorageServices'
+import { getIncomeMoney } from '../services/StorageServices'
 
 const AVATAR_KEY = "AVATAR"
 const NAME_KEY = "NAME"
@@ -40,7 +40,7 @@ class HomeScreen extends React.Component {
       show: false,
       avatarSource: '',
       name: 'input your name',
-      histories: [],
+      incomeMoneyData: [],
       isLoading: false,
       modalVisible: false,
     };
@@ -56,19 +56,19 @@ class HomeScreen extends React.Component {
       })
     }
     )
-    addHistoryMoney("3","3","3","3","3","3");
-    addHistoryMoney("4","3","3","3","3","3");
-    addHistoryMoney("5","3","3","3","3","3");
+    
     this.fetchHistoryData();
   }
 
+  componentDidUpdate(){
+    
+  }
+
   fetchHistoryData = () => {
-    const getList = getListHistoryMoney();
-    console.log("getlist", getList)
-    getListHistoryMoney().then(histories => {
-      console.log('show history nè' + histories)
+    getIncomeMoney().then(incomeMoneyData => {
+      console.log('show history' + incomeMoneyData)
       this.setState({
-        histories: histories,
+        incomeMoneyData: incomeMoneyData,
       })
     }).catch(error => {
       console.error(error)
@@ -77,7 +77,7 @@ class HomeScreen extends React.Component {
   render() {
     monthCurrent = new Date().getMonth() + 1;
     yearCurrent = new Date().getFullYear();
-    currentMoney = this.state.incomeMoney - this.state.expenseMoney;
+    currentMoney = this.state.incomeMoneyData - this.state.expenseMoney;
     this.state.date = new Date();
     // datetime picker
 
@@ -142,8 +142,8 @@ class HomeScreen extends React.Component {
       this.props.navigation.navigate("AddScreen", { index: 1 });
     };
 
-    const { histories } = this.state;
-    console.log("HomeHistory: " + histories);
+    const { incomeMoneyData } = this.state;
+    console.log("HomeHistory: " + incomeMoneyData);
     
     return (
       <View style={styles.container}>
@@ -290,10 +290,11 @@ class HomeScreen extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
-
+          <View style={{flex:1}}>
           <ListHistory
-            histories={histories}
+            incomeMoneyData={incomeMoneyData}
           />
+          </View>
         </ImageBackground>
       </View>
     );

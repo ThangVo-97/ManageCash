@@ -11,6 +11,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import description from '../assets/description.png';
 import Category from '../assets/category.png';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import { addIncomeMoney } from "../services/StorageServices"
 
 class AddPlusMoney extends React.Component {
   constructor(props) {
@@ -21,12 +22,16 @@ class AddPlusMoney extends React.Component {
       date: new Date(),
     };
   }
-  
+  handleAddMoney=(money, date, type)=>{
+    addIncomeMoney(null, new Date(), null,"1000", "classic", "classic")
+    // addHistoryMoney("1","1","1","1","1","1")
+}
   showModalCategory=()=>{
 
   }
   render() {
     const onPressOK = () => {
+      this.handleAddMoney();
       this.props.navigation.navigate('Home');
     };
     const onPressCancel = () => {

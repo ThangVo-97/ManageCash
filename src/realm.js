@@ -8,7 +8,7 @@ const HistorySchema = {
             incomeMoney: 'string',
             expenseMoney: 'string',
             typeIncomeMoney: 'string',
-            typeExpenseMoney: 'string',
+            typeExpenseMoney: 'string'
     }
 }
 const IncomeMoneySchema = {
@@ -17,15 +17,19 @@ const IncomeMoneySchema = {
         incomeMoney: 'string',
         dateCreate: 'date',
         categoryIncomeMoney: 'string',
+        expenseMoney: 'string',
+        descriptionExpenseMoney: 'string',
+        categoryExpenseMoney: 'string'
     }
 }
+
 const ExpenseMoneySchema = {
     name: 'ExpenseMoney',
     properties:{
         dateCreate: 'date',
         expenseMoney: 'string',
         descriptionExpenseMoney: 'string',
-        categoryExpenseMoney: 'string',
+        categoryExpenseMoney: 'string'
     }
 }
 

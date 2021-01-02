@@ -219,11 +219,15 @@ export default StyleSheet.create({
       },
       addPlusMoneyDateTextMoney:{
         flex: 6,
-        color:'white',
         fontSize:Size.s50,
         padding:Size.h10,
         margin:Size.h20,
         color:Color.placeholderTextColor
+      },
+      dateHistoryStyle:{
+        color:Color.yellowTextColor,
+        marginLeft: Size.h20,
+        fontSize: Size.s40,
       },
       addPlusMoneyDescriptionInputMoney:{
         flex: 6,
