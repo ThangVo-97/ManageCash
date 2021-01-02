@@ -72,7 +72,7 @@ const AddScreen = ({ navigation, route }) => {
       >
         <Tab.Screen name="INCOME" component={AddPlusMoney} />
         <Tab.Screen name="EXPENSE" component={AddMinusMoney} />
-        <Tab.Screen name="ACCUMULATE" component={Accumulate} />
+        {/* <Tab.Screen name="ACCUMULATE" component={Accumulate} /> */}
       </Tab.Navigator>
     </ImageBackground>
   );

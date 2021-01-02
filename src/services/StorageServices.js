@@ -1,30 +1,50 @@
 import realm from '../realm'
 
-export const getListHistory = () =>{
-    const moneys = realm.objects('History');
-    return Promise.resolve(moneys);
+export const getListHistoryMoney = () =>{
+    const historyMoney = realm.objects('History');
+    return Promise.resolve(historyMoney);
 }
 
-export const addHistory = (dateCreate, incomeMoney, typeIncomeMoney, expenseMoney, typeExpenseMoney) =>{
-    if(!dateCreate || !incomeMoney || !typeIncomeMoney || !expenseMoney || !typeExpenseMoney){
-        return Promise.reject('Money is empty');
-    }
+export const addHistoryMoney = (id, dateCreate, incomeMoney, typeIncomeMoney, expenseMoney, typeExpenseMoney) =>{
+    // if(!dateCreate || !incomeMoney || !typeIncomeMoney || !expenseMoney || !typeExpenseMoney){
+    //     return Promise.reject('Money is empty');
+    // }
 
     const data = {
-        dateCreate,
-        incomeMoney,
-        typeIncomeMoney,
-        expenseMoney,
-        typeExpenseMoney,
+            id,
+            dateCreate,
+            incomeMoney,
+            expenseMoney,
+            typeIncomeMoney,
+            typeExpenseMoney,
     }
 
-    const history = realm.objects('History');
+    const historyData = realm.objects('History');
     return new Promise((resolve, reject)=>{
         realm.create('History', data);
-        resolve(history);
+        resolve(historyData);
     })
 }
 
+export const addIncomeMoney = (incomeMoney, dateCreate, categoryIncomeMoney) => {
+    if(!incomeMoney || !dateCreate || !categoryIncomeMoney){
+        return Promise.reject('Money is empty.')
+    }
+    
+    const data = {
+        incomeMoney,
+        dateCreate,
+        categoryIncomeMoney,
+    }
+
+    const money = realm.objects('IncomeMoney');
+    return new Promise((resolve, reject)=>{
+        realm.write(()=>{
+            realm.create('IncomeMoney', data)
+            resolve(money)
+        })
+    })
+}
 
 export const editHistory = (history) => {
     const histories = realm.objects('History')
@@ -38,6 +58,40 @@ export const editHistory = (history) => {
         })
     })
 }
+
+export const getIncomeMoney = () => {
+    const IncomeMoney = realm.objects('IncomeMoney');
+    return Promise.resolve(IncomeMoney);
+}
+
+
+export const getExpenseMoney = () => {
+    const ExpenseMoney = realm.objects('ExpenseMoney');
+    return Promise.resolve(ExpenseMoney);
+}
+
+export const addExpenseMoney = (expenseMoney, categoryExpenseMoney, dateCreate, descriptionExpenseMoney) => {
+    if(!expenseMoney || !dateCreate || !categoryExpenseMoney || !descriptionExpenseMoney){
+        return Promise.reject('Money is empty.')
+    }
+    
+    const data = {
+        expenseMoney,
+        categoryExpenseMoney,
+        dateCreate,
+        descriptionExpenseMoney,
+    }
+
+    const money = realm.objects('ExpenseMoney');
+    return new Promise((resolve, reject)=>{
+        realm.write(()=>{
+            realm.create('ExpenseMoney', data)
+            resolve(money)
+        })
+    })
+}
+
+
 
 export const getAccumulateMoney = () => {
     const AccumulateMoney = realm.objects('accumulateMoney');
@@ -62,57 +116,6 @@ export const addAccumulateMoney = (accumulateMoney, dateCreate, dateEnd, descrip
     return new Promise((resolve, reject)=>{
         realm.write(()=>{
             realm.create('accumulateMoney', data)
-            resolve(money)
-        })
-    })
-}
-
-export const getIncomeMoney = () => {
-    const IncomeMoney = realm.objects('IncomeMoney');
-    return Promise.resolve(IncomeMoney);
-}
-
-export const addIncomeMoney = (incomeMoney, dateCreate, categoryIncomeMoney) => {
-    if(!incomeMoney || !dateCreate || !categoryIncomeMoney){
-        return Promise.reject('Money is empty.')
-    }
-    
-    const data = {
-        incomeMoney,
-        dateCreate,
-        categoryIncomeMoney,
-    }
-
-    const money = realm.objects('IncomeMoney');
-    return new Promise((resolve, reject)=>{
-        realm.write(()=>{
-            realm.create('IncomeMoney', data)
-            resolve(money)
-        })
-    })
-}
-
-export const getExpenseMoney = () => {
-    const ExpenseMoney = realm.objects('ExpenseMoney');
-    return Promise.resolve(ExpenseMoney);
-}
-
-export const addExpenseMoney = (expenseMoney, categoryExpenseMoney, dateCreate, descriptionExpenseMoney) => {
-    if(!expenseMoney || !dateCreate || !categoryExpenseMoney || !descriptionExpenseMoney){
-        return Promise.reject('Money is empty.')
-    }
-    
-    const data = {
-        expenseMoney,
-        categoryExpenseMoney,
-        dateCreate,
-        descriptionExpenseMoney,
-    }
-
-    const money = realm.objects('ExpenseMoney');
-    return new Promise((resolve, reject)=>{
-        realm.write(()=>{
-            realm.create('ExpenseMoney', data)
             resolve(money)
         })
     })

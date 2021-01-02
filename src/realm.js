@@ -3,25 +3,14 @@ import Realm from 'realm'
 const HistorySchema = {
     name: 'History',
     properties: {
-        dateCreate: 'date',
-        incomeMoney: 'string',
-        expenseMoney: 'string',
-        typeIncomeMoney: 'string',
-        typeExpenseMoney: 'string',
+            id: 'string',
+            dateCreate: 'string',
+            incomeMoney: 'string',
+            expenseMoney: 'string',
+            typeIncomeMoney: 'string',
+            typeExpenseMoney: 'string',
     }
 }
-
-const AccumulateMoneySchema = {
-    name: 'accumulateMoney',
-    properties:{
-        accumulateMoney: 'string',
-        dateCreate: 'date',
-        dateEnd: 'date',
-        descriptionAccumulate: 'string',
-        isNotification: 'bool',
-    }
-}
-
 const IncomeMoneySchema = {
     name: 'IncomeMoney',
     properties:{
@@ -30,8 +19,6 @@ const IncomeMoneySchema = {
         categoryIncomeMoney: 'string',
     }
 }
-
-
 const ExpenseMoneySchema = {
     name: 'ExpenseMoney',
     properties:{
@@ -45,7 +32,6 @@ const ExpenseMoneySchema = {
 export default new Realm({
     schema:
         [
-            AccumulateMoneySchema,
             ExpenseMoneySchema,
             IncomeMoneySchema,
             HistorySchema,

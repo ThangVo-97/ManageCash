@@ -189,6 +189,7 @@ dependencies {
     compile project(':react-native-vector-icons')
     compile project(':@react-native-community_cameraroll')
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation project(':realm')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

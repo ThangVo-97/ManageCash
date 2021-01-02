@@ -24,13 +24,14 @@ class AddPlusMoney extends React.Component {
   }
 
   handleAddMoney=(money, date, type)=>{
-    addIncomeMoney("12/29/2020", "100000", "Classic");
-    addHistory("12/29/2020", "100000", "Classic", "200000", "Classic");
-            // .then(listIncomeMoney => {
-            //     this.setState({
-            //       listIncomeMoney,
-            //     })
-            // })
+    Realm.open({
+      schema: [{ name: 'Dog', properties: { name: 'string' } }]
+  }).then(realm => {
+      realm.write(() => {
+          realm.create('Dog', { name: 'Rex' });
+      });
+     
+  });
   }
   render() {
     const {date, money, type} = this.state;

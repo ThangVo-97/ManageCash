@@ -5,13 +5,8 @@ import {
   Image,
   ImageBackground,
   TextInput,
-  I18nManager,
-  FlatList,
-  Modal,
   AsyncStorage,
   StyleSheet,
-  TouchableHighlight,
-  SectionList,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -21,22 +16,17 @@ import MainBackGround from "../assets/background.jpg";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ProgressCircle from "react-native-progress-circle";
-import incomeIcon from "../assets/income.png";
-import expenseIcon from '../assets/expense.png';
 
 import DatePicker from "@react-native-community/datetimepicker";
 import { Root } from "native-base";
 import styles from "../values/style";
 import Sizes from "../values/dimens";
-import style from "../values/style";
 
-import { getListHistory, } from '../services/StorageServices'
+import { getListHistoryMoney, addHistoryMoney, getIncomeMoney} from '../services/StorageServices'
 
 const AVATAR_KEY = "AVATAR"
 const NAME_KEY = "NAME"
-// import ImagePickerIOS from "@react-native-community/image-picker-ios";
-// const Realm = require('realm');
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
+import ListHistory from "../component/history/ListHistory";
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -49,25 +39,15 @@ class HomeScreen extends React.Component {
       expenseMoney: 1200000,
       show: false,
       avatarSource: '',
-      name: '',
-      histories: [
-      {
-        title: 
-        {dateCreate: '2020'},
-        data: ["Pizza", "Burger", "Risotto"]
-      },
-      {
-        title: {dateCreate: '2020'},
-        data: ["French Fries", "Onion Rings", "Fried Shrimps"]
-      },
-      ],
+      name: 'input your name',
+      histories: [],
       isLoading: false,
       modalVisible: false,
     };
   }
 
 
-  async componentDidMount() {
+  componentDidMount() {
     AsyncStorage.multiGet([NAME_KEY, AVATAR_KEY]).then((value) => {
 
       this.setState({
@@ -76,26 +56,24 @@ class HomeScreen extends React.Component {
       })
     }
     )
-    this.fetchHistoryData()
+    addHistoryMoney("3","3","3","3","3","3");
+    addHistoryMoney("4","3","3","3","3","3");
+    addHistoryMoney("5","3","3","3","3","3");
+    this.fetchHistoryData();
   }
-  formatData = (dateCreate, incomeMoney, typeIncomeMoney, expenseMoney, typeExpenseMoney) =>{
-    
-  }
-  fetchHistoryData = () => {
-    this.setState({ loading: true })
 
-    getListHistory().then(history => {
-      
+  fetchHistoryData = () => {
+    const getList = getListHistoryMoney();
+    console.log("getlist", getList)
+    getListHistoryMoney().then(histories => {
+      console.log('show history nè' + histories)
       this.setState({
-        loading: false,
-        histories: [...history], 
+        histories: histories,
       })
     }).catch(error => {
       console.error(error)
-
-      this.setState({ loading: false })
     })
-  }    
+  }
   render() {
     monthCurrent = new Date().getMonth() + 1;
     yearCurrent = new Date().getFullYear();
@@ -163,6 +141,10 @@ class HomeScreen extends React.Component {
     const MinusMoneyPress = () => {
       this.props.navigation.navigate("AddScreen", { index: 1 });
     };
+
+    const { histories } = this.state;
+    console.log("HomeHistory: " + histories);
+    
     return (
       <View style={styles.container}>
         <ImageBackground source={MainBackGround} style={styles.imageStyle}>
@@ -194,7 +176,7 @@ class HomeScreen extends React.Component {
                 AsyncStorage.setItem(NAME_KEY, value);
                 this.setState({ name: value })
               }}
-              placeholder={this.state.name}
+              // placeholder={this.state.name}
             />
 
             <View style={styles.horizontalStyleDateTime}>
@@ -309,60 +291,8 @@ class HomeScreen extends React.Component {
             </View>
           </View>
 
-          <SectionList
-            style={{ marginBottom: Sizes.s100 }}
-            sections={this.state.histories}
-            renderSectionHeader={({ section: { title } }) => (
-              <Text style={styles.titleListHistoryStyle}>{title.dateCreate}</Text>
-            )}
-            renderItem={({ item }) => (
-              <View>
-                <View style={styles.horizontalStyle}>
-
-                  {/* income */}
-                  <Image source={incomeIcon} style={styles.iconIncomeStyle} />
-                  <View>
-                    <Text style={styles.categoryListHistoryStyle}>
-                      {item.typeIncomeMoney}
-                    </Text>
-                    <View style={styles.horizontalStyle}>
-                      <AntDesign
-                        marginLeft={30}
-                        name="plus"
-                        size={15}
-                        style={style.iconIncomeStyle2}
-                        color={Color.greenTextColor}
-                      />
-                      <Text style={styles.incomeListHistoryStyle}>
-                        {item.incomeMoney}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-                {/* expense */}
-                <View style={styles.horizontalStyle}>
-                  <Image source={expenseIcon} style={styles.iconIncomeStyle} />
-                  <View>
-                    <Text style={styles.categoryListHistoryStyle}>
-                      {item.typeExpenseMoney}
-                    </Text>
-                    <View style={styles.horizontalStyle}>
-                      <AntDesign
-                        marginLeft={30}
-                        name="minus"
-                        size={15}
-                        style={style.iconIncomeStyle2}
-                        color={Color.redTextColor}
-                      />
-                      <Text style={styles.expenseListHistoryStyle}>
-                        {item.expenseMoney}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            )}
-            keyExtractor={(id) => id}
+          <ListHistory
+            histories={histories}
           />
         </ImageBackground>
       </View>
