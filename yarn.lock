@@ -6289,6 +6289,13 @@
     "prop-types" "^15.5.8"
     "tween-functions" "^1.0.1"
 
+"react-native-dropdown-picker@^3.7.6":
+  "integrity" "sha512-d7siIbuQusQiLQv632Oin3jq+fZp4uAfY8e/7xKiPcKElxg6eH3H9CA3CtT0FAe0hEFqqoWC3kwFSQ1JAhzMgw=="
+  "resolved" "https://registry.npmjs.org/react-native-dropdown-picker/-/react-native-dropdown-picker-3.7.6.tgz"
+  "version" "3.7.6"
+  dependencies:
+    "react-native-vector-icons" "^7.0.0"
+
 "react-native-easy-grid@0.2.2":
   "integrity" "sha512-MlYrNIldnEMKn6TVatQN1P64GoVlwGIuz+8ncdfJ0Wq/xtzUkQwlil8Uksyp7MhKfENE09MQnGNcba6Mx3oSAA=="
   "resolved" "https://registry.npmjs.org/react-native-easy-grid/-/react-native-easy-grid-0.2.2.tgz"
@@ -6320,6 +6327,11 @@
   "integrity" "sha512-VP0s92bgbTMQy4hQzPU4LlGyFj3z5u7i1HYFG8/yzXXfGkX1cxKS4xOlE+OTaObWC99w7Bodi3h8R7En2nQPYw=="
   "resolved" "https://registry.npmjs.org/react-native-progress-circle/-/react-native-progress-circle-2.1.0.tgz"
   "version" "2.1.0"
+
+"react-native-prompt-android@^1.1.0":
+  "integrity" "sha512-4JoyEaT2ZnK9IH+tDFpbTiQBgva8UIFGQf4/Uw/tnEVWBERlVlzcs5B82T9BkeEhEqXhp89JaiSBnLWj30lciw=="
+  "resolved" "https://registry.npmjs.org/react-native-prompt-android/-/react-native-prompt-android-1.1.0.tgz"
+  "version" "1.1.0"
 
 "react-native-pure-chart@^0.0.24":
   "integrity" "sha512-YczRMLyR1PY5u5qpYc4ScrYdbPVAD9GxIdnR8m7zbttwytlHVjn90+buYBnHW3Lm/JXHVzCMjTQkXQ5cskvB+Q=="

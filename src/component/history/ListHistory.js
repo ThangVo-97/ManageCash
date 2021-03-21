@@ -5,9 +5,9 @@ import HistoryItem from "./HistoryItem"
 
 class ListHistory extends Component {
 
+    
     render() {
         const { incomeMoneyData } = this.props
-        console.log("ListHistory: " + incomeMoneyData);
         return (
             <View style={styles.container}>
                 <ScrollView>

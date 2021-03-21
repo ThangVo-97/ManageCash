@@ -19,7 +19,7 @@ const AddScreen = ({ navigation, route }) => {
   // const [colorFrame, setColorFrame] = useState('red')
   let name, colorFrame = 'blue';
   const { index } = route.params;
-  console.log('index minus ' + index)
+  // console.log('index minus ' + index)
 
   if (JSON.stringify(index) === '0') {
     name = "INCOME";
@@ -27,9 +27,6 @@ const AddScreen = ({ navigation, route }) => {
   } else if (JSON.stringify(index) === '1') {
     name = "EXPENSE";
     colorFrame = '#9F031C'
-  } else if (index === 2) {
-    name = "ACCUMULATE";
-    setColorFrame('#0B4066')
   }
   return (
 
@@ -61,18 +58,14 @@ const AddScreen = ({ navigation, route }) => {
             right: Size.h100,
             height: Size.h100,
           },
-
         }}
         screenOptions={{
           style: { backgroundColor: 'white' },
-
         }}
-        // tabBar={(props) => <MyTabBar {...props} />}
         initialRouteName={name}
       >
         <Tab.Screen name="INCOME" component={AddPlusMoney} />
         <Tab.Screen name="EXPENSE" component={AddMinusMoney} />
-        {/* <Tab.Screen name="ACCUMULATE" component={Accumulate} /> */}
       </Tab.Navigator>
     </ImageBackground>
   );

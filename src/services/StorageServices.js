@@ -3,8 +3,11 @@ import realm from '../realm'
 export const addIncomeMoney = (incomeMoney, dateCreate, 
     categoryIncomeMoney, expenseMoney, descriptionExpenseMoney, categoryExpenseMoney) => {
     if(!dateCreate){
+        // if(!expenseMoney && !incomeMoney)
         return Promise.reject('Money is empty.')
+        
     }
+    
     
     const data = {
         incomeMoney,
@@ -26,5 +29,6 @@ export const addIncomeMoney = (incomeMoney, dateCreate,
 
 export const getIncomeMoney = () => {
     const IncomeMoney = realm.objects('IncomeMoney');
+    // const incomeSort = IncomeMoney.filtered('SORT(dateCreate DESC)')
     return Promise.resolve(IncomeMoney);
 }

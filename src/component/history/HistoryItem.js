@@ -22,12 +22,12 @@ class HistoryItem extends Component {
             categoryIncomeMoney,
             dateCreate,
           } = incomeMoneyData
-        console.log("Item history" + dateCreate)
+        // console.log("Item history" + dateCreate)
         return (
             <View>
               <Text style={styles.dateHistoryStyle}>
-                {dateCreate.getDate()}/{dateCreate.getMonth() + 1}/{dateCreate.getFullYear()}
-                </Text>
+              {dateCreate}
+              </Text>
                 {
                 incomeMoney !== "" &&
                 <View style={styles.horizontalStyle}>

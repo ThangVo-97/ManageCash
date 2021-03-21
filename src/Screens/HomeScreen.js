@@ -35,8 +35,8 @@ class HomeScreen extends React.Component {
       visibility: false,
       DateSearch: "",
       date: new Date(),
-      incomeMoney: 5000000,
-      expenseMoney: 1200000,
+      incomeMoney: 0,
+      expenseMoney: 100000,
       show: false,
       avatarSource: '',
       name: 'input your name',
@@ -60,24 +60,63 @@ class HomeScreen extends React.Component {
     this.fetchHistoryData();
   }
 
-  componentDidUpdate(){
-    
-  }
+  componentDidUpdate(preProps, preState){
+    if(preState.incomeMoney !== this.state.incomeMoney){
 
+      this.state.incomeMoneyData.map((incomeMoneyData, index)=>{
+        let sum = 0;
+        sum = sum + Number(incomeMoneyData.incomeMoney)
+        this.setState({
+          incomeMoney: sum
+        })
+      })
+    }
+  }
   fetchHistoryData = () => {
     getIncomeMoney().then(incomeMoneyData => {
       console.log('show history' + incomeMoneyData)
+      var sumIncomme = 0;
+      var sumExpense = 0;
+
+      incomeMoneyData.map((item)=>{
+        
+        let moneyIncome= Number(item.incomeMoney);
+        let moneyExpense = Number(item.expenseMoney);
+        sumIncomme += moneyIncome;
+        // sumExpense += moneyExpense; 
+      })
+      // console.log("SUm", sum)
       this.setState({
         incomeMoneyData: incomeMoneyData,
+        incomeMoney: sumIncomme,
+        // expenseMoney: sumExpense,
       })
     }).catch(error => {
       console.error(error)
     })
   }
+  getDate(){
+    
+    // const { Money } = this.props.route.params;
+    // console.log(" money ", Money)
+  }
   render() {
     monthCurrent = new Date().getMonth() + 1;
     yearCurrent = new Date().getFullYear();
-    currentMoney = this.state.incomeMoneyData - this.state.expenseMoney;
+    
+    const { incomeMoneyData } = this.state;
+    console.log("HomeHistory: " + incomeMoneyData);
+    
+    // incomeMoneyData.map((incomeMoneyData, index)=>{
+    //   let sum = 0;
+    //   sum = sum + Number(incomeMoneyData.incomeMoney)
+    //   this.setState({
+    //     incomeMoney: sum
+    //   })
+    // })
+    
+    currentMoney = this.state.incomeMoney - this.state.expenseMoney;
+    
     this.state.date = new Date();
     // datetime picker
 
@@ -86,6 +125,8 @@ class HomeScreen extends React.Component {
         show: true,
       });
     };
+
+
     const onChangeDate = (event, selectedDate) => {
       console.log("currentDate " + selectedDate);
       this.setState({
@@ -129,8 +170,6 @@ class HomeScreen extends React.Component {
           });
           console.log('source ' + this.state.avatarSource)
           AsyncStorage.setItem(AVATAR_KEY, JSON.stringify(this.state.avatarSource));
-
-
         }
       });
 
@@ -142,8 +181,6 @@ class HomeScreen extends React.Component {
       this.props.navigation.navigate("AddScreen", { index: 1 });
     };
 
-    const { incomeMoneyData } = this.state;
-    console.log("HomeHistory: " + incomeMoneyData);
     
     return (
       <View style={styles.container}>
@@ -193,18 +230,18 @@ class HomeScreen extends React.Component {
               <View style={styles.progressBarStyle}>
                 <ProgressCircle
                   percent={
-                    (this.state.expenseMoney * 100) / this.state.incomeMoney
+                    (currentMoney * 100) / (this.state.incomeMoney)
                   }
                   radius={60}
                   borderWidth={Sizes.h20}
                   color={Color.progressBarInColor}
-                  shadowColor="#999"
+                  shadowColor="#"
                   width={100}
                   marginLeft={200}
                   bgColor={Color.progressBarOutColor}
                 >
                   <Text style={styles.textProgress}>
-                    {Math.round(
+                    {100-Math.round(
                       ((this.state.expenseMoney * 100) /
                         this.state.incomeMoney) *
                       100
@@ -290,7 +327,7 @@ class HomeScreen extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{flex:1}}>
+          <View style={{flex:1, marginBottom: (Sizes.s120 - Sizes.s20)}}>
           <ListHistory
             incomeMoneyData={incomeMoneyData}
           />

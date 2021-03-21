@@ -1,5 +1,9 @@
 import * as React from "react";
-import { View, Text, Image, TextInput, ImageBackground } from "react-native";
+import {
+  View, Text, Image, TextInput,
+  SafeAreaView, ScrollView,
+  ImageBackground, Modal
+} from "react-native";
 
 import DatePicker from "@react-native-community/datetimepicker";
 import MainBackGround from "../assets/background.jpg";
@@ -10,7 +14,40 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import description from "../assets/description.png";
 import { addIncomeMoney } from "../services/StorageServices"
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Form } from "native-base";
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+
+
+import Category from '../assets/category.png';
+import foodIcon from '../assets/food.png';
+import drinkIcon from '../assets/drink.png';
+import entertaiIcon from '../assets/entertainment.png';
+import houseIcon from '../assets/house.png';
+import shoppingIcon from '../assets/shopping.png';
+import transportIcon from '../assets/transport.png';
+import newCategoryIcon from '../assets/category.png';
+import healthIcon from '../assets/health.png'
+import travelIcon from '../assets/travel.png'
+import sportIcon from '../assets/sport.png'
+import kidIcon from '../assets/kids.png'
+import fitIcon from '../assets/fitness.png'
+import partyIcon from '../assets/party.png'
+import DropDownPicker from 'react-native-dropdown-picker';
+import Sizes from "../values/dimens";
+const currentDate = new Date();
+const Categories = [
+  { key: 1, name: 'Food', icon: foodIcon },
+  { key: 3, name: 'Drink', icon: drinkIcon },
+  {
+    key: 2,
+    name: 'Entertaiment',
+    icon: entertaiIcon,
+  },
+  { key: 5, name: 'House', icon: houseIcon },
+  { key: 6, name: 'Shopping', icon: shoppingIcon },
+  { key: 4, name: 'Transport', icon: transportIcon },
+  { key: 7, name: 'Heath', icon: healthIcon },
+  { key: 8, name: 'Travel', icon: travelIcon },
+]
 class AddPlusMoney extends React.Component {
   constructor(props) {
     super(props);
@@ -18,20 +55,29 @@ class AddPlusMoney extends React.Component {
       IsShowDate: false,
       date: new Date(),
       money: '',
-      type: '',
+      type: "Salary",
       listIncomeMoney: [],
+      modalVisible: false,
     };
   }
 
-  handleAddMoney=(money, date, type)=>{
-      addIncomeMoney("10000", new Date(), "classic", "", "", "")
-      // addHistoryMoney("1","1","1","1","1","1")
+  handleAddMoney = (money, date, type) => {
+    addIncomeMoney(money, date, type, "", "", "")
+
   }
+  
   render() {
-    const {date, money, type} = this.state;
+    const { date, money, type } = this.state;
+    const currentDateTime = currentDate.getDate() + "/" + (currentDate.getMonth() + 1) + "/" + currentDate.getFullYear()
+    const choseDateFormat = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+
     const onPressOK = () => {
-      this.handleAddMoney(money, date, type);
-      this.props.navigation.navigate('Home');
+      this.handleAddMoney(money, choseDateFormat, type);
+      this.props.navigation.navigate('Home', {
+        Money: money, 
+        createDate: choseDateFormat, 
+        Type: type,
+      });
     };
     const onPressCancel = () => {
       this.props.navigation.navigate('Home');
@@ -56,13 +102,42 @@ class AddPlusMoney extends React.Component {
               style={styles.AddPlusMoneyInputMoney}
               placeholder="0"
               placeholderTextColor={Color.yellowTextColor}
-              keyboardType="numeric" />
+              keyboardType="numeric"
+              onChangeText={value => this.setState({ money: value })}
+            />
             <Text style={styles.AddPlusMoneyTextMoney}>$</Text>
           </View>
           <View style={{ height: 1, backgroundColor: "gray" }}></View>
+{/* Type */}
 
+          <View style={{height:80, flexDirection: "row",alignItems:'center', marginTop: 10}}>
+            <Image source={Category} style={styles.iconCategory} />
+            <DropDownPicker
+              items={[
+                { label: 'Home', value: 'Home', hidden: true},
+                { label: 'Salary', value: 'Salary', hidden: true},
+                { label: 'Sell', value: 'Sell' },
+                { label: 'Other', value: 'Other' },
+              ]}
+              
+              defaultValue={type}
+              containerStyle={{ height: 30, width: 250 }}
+              style={{ backgroundColor: 'gray' }}
+              itemStyle={{
+                justifyContent: 'flex-start',
+                width: 100
+              }}
+              dropDownStyle={{ backgroundColor: 'gray' }}
+              onChangeItem={(item) => this.setState({
+                type: item.value,
+              })}
+            />
+            
+          </View>
+          
+          <View style={{ height: 1, backgroundColor: 'gray' }}></View>
           {/* Date */}
-          <TouchableOpacity style={styles.horizontalStyle3}>
+          <TouchableOpacity style={[styles.horizontalStyle3, {height: 80}]} onPress={showPicker}>
             <MaterialCommunityIcons
               name="calendar-month-outline"
               style={{ flex: 1 }}
@@ -72,13 +147,13 @@ class AddPlusMoney extends React.Component {
             />
             {this.state.IsShowDate ? (
               <Text style={styles.addPlusMoneyDateTextMoney}>
-                {new Date(this.state.date).getDate()}/
-                {new Date(this.state.date).getMonth()}/
-                {new Date(this.state.date).getFullYear()}
+                {choseDateFormat}
               </Text>
             ) : (
-              <Text style={styles.addPlusMoneyDateTextMoney}>Date</Text>
-            )}
+                <Text style={styles.addPlusMoneyDateTextMoney}>
+                  {currentDateTime}
+                </Text>
+              )}
             <View>
               {this.state.showDatePicker && (
                 <DatePicker
@@ -92,19 +167,10 @@ class AddPlusMoney extends React.Component {
             </View>
           </TouchableOpacity>
 
-          <View style={{height: 1, backgroundColor: 'gray'}}></View>
+          <View style={{ height: 1, backgroundColor: 'gray' , marginBottom: 20}}></View>
 
-          {/* Description */}
-          <View style={styles.horizontalStyle3}>
-            <Image source={description} style={styles.iconDescription} />
-            <TextInput
-              style={styles.addPlusMoneyDescriptionInputMoney}
-              placeholder="Description"
-              placeholderTextColor={Color.placeholderTextColor}></TextInput>
-          </View>
-          <View style={{height: 1, backgroundColor: 'gray'}}></View>
+          
         </View>
-
         {/* Button */}
         <View style={styles.horizontalStyle4}>
           <TouchableOpacity style={styles.addPlusMoneyOK} onPress={onPressOK}>
@@ -113,7 +179,7 @@ class AddPlusMoney extends React.Component {
           <TouchableOpacity
             style={styles.addPlusMoneyCancel}
             onPress={onPressCancel}>
-            <Text style={{ color: "black", fontSize: Size.s80 }}>Cancel</Text>
+            <Text style={{ color: "black",fontSize:Sizes.s70,padding: Sizes.h10, paddingLeft: Sizes.h10, paddingRight: Sizes.h10 }}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>

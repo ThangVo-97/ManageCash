@@ -9,6 +9,37 @@ const widthScreen = Dimensions.get("screen").width;
 const heightScreen = Dimensions.get("screen").height;
 const screenSize = Dimensions.get('window')
 export default StyleSheet.create({
+  CategoryStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    alignContent: 'center',
+    flexWrap: 'wrap',
+    marginRight: Sizes.h30,
+    marginLeft : Sizes.h30,
+    marginTop: Sizes.h30,
+    backgroundColor:"rgba(7, 45, 73, 2)",
+    padding: Sizes.h20,
+    borderRadius: 20,
+  },
+  CategoryItemStyle: {
+    width: Sizes.s200,
+    height: Sizes.s200,
+    justifyContent: 'center',
+    alignContent: 'center',
+    backgroundColor:'red'
+  },
+  CategoryItemImage: {
+    width: Sizes.s200,
+    height: Sizes.s100,
+    resizeMode: 'contain'
+  },
+  CategoryItemText: {
+    textAlign: 'center',
+    fontSize: Sizes.h30,
+    fontWeight: 'bold',
+    color: "#6BA1C9",
+  },
     container: {
         backgroundColor: "#000000FF",
       
@@ -252,7 +283,7 @@ export default StyleSheet.create({
       iconCategory:{
         height:Size.s100,
         width:Size.s100,
-        flex:1
+        
       },
       
       iconCategory2:{
